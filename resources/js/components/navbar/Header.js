@@ -1,10 +1,20 @@
 import React from 'react'
 import { connect } from "react-redux"
 import { withRouter } from 'react-router-dom'
+import { fetchUserData } from '../../store/user/userAction'
 
 class Header extends React.Component {
+    getUserData() {
+        const { authenticated, user } = this.props
+        if (authenticated && user.token !== null) {
+            // if there is an error, do not try to refetch
+            this.props.dispatch(fetchUserData(user))
+        }
+    }
+
     render() {
         const { authenticated, user } = this.props
+        this.getUserData()
         return (
             <div className="mb-4">
                 <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -23,9 +33,15 @@ class Header extends React.Component {
                         </button>
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav mr-auto">
+                                {
+                                    authenticated
+                                        && (
+                                            <a href="#">Dashboard</a>
+                                        )
+                                }
                             </ul>
                             { authenticated
-                                ? (
+                                && (
                                     <ul className="navbar-nav ml-auto">
                                         <li className="nav-item dropdown">
                                             <a
@@ -49,7 +65,6 @@ class Header extends React.Component {
                                         </li>
                                     </ul>
                                 )
-                                : ('')
                             }
                         </div>
                     </div>

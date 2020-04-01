@@ -8,13 +8,13 @@ export const FETCH_USER_AUTH_BEGIN   = 'FETCH_USER_AUTH_BEGIN'
 export const FETCH_USER_AUTH_SUCCESS = 'FETCH_USER_AUTH_SUCCESS'
 export const FETCH_USER_AUTH_FAILURE = 'FETCH_USER_AUTH_FAILURE'
 
-export const fetchUserDataBegin   = () => ({ type: FETCH_USER_DATA_BEGIN   })
-export const fetchUserDataSuccess = () => ({ type: FETCH_USER_DATA_SUCCESS })
-export const fetchUserDataFailure = () => ({ type: FETCH_USER_DATA_FAILURE })
+export const fetchUserDataBegin   = ()        => ({ type: FETCH_USER_DATA_BEGIN   })
+export const fetchUserDataFailure = ()        => ({ type: FETCH_USER_DATA_FAILURE })
+export const fetchUserDataSuccess = (payload) => ({ type: FETCH_USER_DATA_SUCCESS, payload })
 
 export const userAuthBegin   = ()        => ({ type: FETCH_USER_AUTH_BEGIN   })
-export const userAuthSuccess = (payload) => ({ type: FETCH_USER_AUTH_SUCCESS, payload })
 export const userAuthFailure = ()        => ({ type: FETCH_USER_AUTH_FAILURE })
+export const userAuthSuccess = (payload) => ({ type: FETCH_USER_AUTH_SUCCESS, payload })
 
 export const fetchUserData = (user = null) => {
     return dispatch => {
@@ -32,8 +32,14 @@ export const fetchUserData = (user = null) => {
             }
         )
         .then((res) => {
-            dispatch(fetchUserDataSuccess())
-            return res
+            dispatch(fetchUserDataSuccess({
+                user: {
+                    id       : res.data.id,
+                    name     : res.data.name,
+                    email    : res.data.email,
+                    password : null,
+                }
+            }))
         })
         .catch(() => {
             dispatch(fetchUserDataFailure())

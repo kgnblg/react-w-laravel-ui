@@ -72212,6 +72212,8 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEB
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -72236,28 +72238,60 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
 var Dashboard = /*#__PURE__*/function (_React$Component) {
   _inherits(Dashboard, _React$Component);
 
   var _super = _createSuper(Dashboard);
 
-  function Dashboard() {
+  function Dashboard(props) {
     _classCallCheck(this, Dashboard);
 
-    return _super.apply(this, arguments);
+    return _super.call(this, props);
   }
 
   _createClass(Dashboard, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Dashboard");
+      var _this$props = this.props,
+          authenticated = _this$props.authenticated,
+          user = _this$props.user;
+
+      if (!authenticated) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
+          to: "/"
+        });
+      }
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container py-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row justify-content-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
+      }, "Dashboard"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      })))));
     }
   }]);
 
   return Dashboard;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (Dashboard);
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    user: state.user.user,
+    authenticated: state.user.authenticated,
+    error: state.user.error
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(Dashboard));
 
 /***/ }),
 
@@ -72486,6 +72520,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _store_user_userAction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/user/userAction */ "./resources/js/store/user/userAction.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -72512,6 +72547,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Header = /*#__PURE__*/function (_React$Component) {
   _inherits(Header, _React$Component);
 
@@ -72524,11 +72560,24 @@ var Header = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(Header, [{
-    key: "render",
-    value: function render() {
+    key: "getUserData",
+    value: function getUserData() {
       var _this$props = this.props,
           authenticated = _this$props.authenticated,
           user = _this$props.user;
+
+      if (authenticated && user.token !== null) {
+        // if there is an error, do not try to refetch
+        this.props.dispatch(Object(_store_user_userAction__WEBPACK_IMPORTED_MODULE_3__["fetchUserData"])(user));
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props2 = this.props,
+          authenticated = _this$props2.authenticated,
+          user = _this$props2.user;
+      this.getUserData();
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "mb-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
@@ -72553,7 +72602,9 @@ var Header = /*#__PURE__*/function (_React$Component) {
         id: "navbarSupportedContent"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "navbar-nav mr-auto"
-      }), authenticated ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, authenticated && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#"
+      }, "Dashboard")), authenticated && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "navbar-nav ml-auto"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-item dropdown"
@@ -72573,7 +72624,7 @@ var Header = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "dropdown-item",
         href: ""
-      })))) : ''))));
+      }))))))));
     }
   }]);
 
@@ -72634,7 +72685,7 @@ var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_rootReduc
 /*!***********************************************!*\
   !*** ./resources/js/store/user/userAction.js ***!
   \***********************************************/
-/*! exports provided: FETCH_USER_DATA_BEGIN, FETCH_USER_DATA_SUCCESS, FETCH_USER_DATA_FAILURE, FETCH_USER_AUTH_BEGIN, FETCH_USER_AUTH_SUCCESS, FETCH_USER_AUTH_FAILURE, fetchUserDataBegin, fetchUserDataSuccess, fetchUserDataFailure, userAuthBegin, userAuthSuccess, userAuthFailure, fetchUserData, authenticateUser */
+/*! exports provided: FETCH_USER_DATA_BEGIN, FETCH_USER_DATA_SUCCESS, FETCH_USER_DATA_FAILURE, FETCH_USER_AUTH_BEGIN, FETCH_USER_AUTH_SUCCESS, FETCH_USER_AUTH_FAILURE, fetchUserDataBegin, fetchUserDataFailure, fetchUserDataSuccess, userAuthBegin, userAuthFailure, userAuthSuccess, fetchUserData, authenticateUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -72646,11 +72697,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_USER_AUTH_SUCCESS", function() { return FETCH_USER_AUTH_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_USER_AUTH_FAILURE", function() { return FETCH_USER_AUTH_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserDataBegin", function() { return fetchUserDataBegin; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserDataSuccess", function() { return fetchUserDataSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserDataFailure", function() { return fetchUserDataFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserDataSuccess", function() { return fetchUserDataSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userAuthBegin", function() { return userAuthBegin; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userAuthSuccess", function() { return userAuthSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userAuthFailure", function() { return userAuthFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userAuthSuccess", function() { return userAuthSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserData", function() { return fetchUserData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "authenticateUser", function() { return authenticateUser; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -72668,14 +72719,15 @@ var fetchUserDataBegin = function fetchUserDataBegin() {
     type: FETCH_USER_DATA_BEGIN
   };
 };
-var fetchUserDataSuccess = function fetchUserDataSuccess() {
-  return {
-    type: FETCH_USER_DATA_SUCCESS
-  };
-};
 var fetchUserDataFailure = function fetchUserDataFailure() {
   return {
     type: FETCH_USER_DATA_FAILURE
+  };
+};
+var fetchUserDataSuccess = function fetchUserDataSuccess(payload) {
+  return {
+    type: FETCH_USER_DATA_SUCCESS,
+    payload: payload
   };
 };
 var userAuthBegin = function userAuthBegin() {
@@ -72683,15 +72735,15 @@ var userAuthBegin = function userAuthBegin() {
     type: FETCH_USER_AUTH_BEGIN
   };
 };
+var userAuthFailure = function userAuthFailure() {
+  return {
+    type: FETCH_USER_AUTH_FAILURE
+  };
+};
 var userAuthSuccess = function userAuthSuccess(payload) {
   return {
     type: FETCH_USER_AUTH_SUCCESS,
     payload: payload
-  };
-};
-var userAuthFailure = function userAuthFailure() {
-  return {
-    type: FETCH_USER_AUTH_FAILURE
   };
 };
 var fetchUserData = function fetchUserData() {
@@ -72710,8 +72762,14 @@ var fetchUserData = function fetchUserData() {
         Authorization: "Bearer ".concat(user.token)
       }
     }).then(function (res) {
-      dispatch(fetchUserDataSuccess());
-      return res;
+      dispatch(fetchUserDataSuccess({
+        user: {
+          id: res.data.id,
+          name: res.data.name,
+          email: res.data.email,
+          password: null
+        }
+      }));
     })["catch"](function () {
       dispatch(fetchUserDataFailure());
     });
@@ -72780,6 +72838,8 @@ function userReducer() {
   if (action.type === undefined || action.type === null) {
     return;
   }
+
+  console.log(action.type);
 
   switch (action.type) {
     case _userAction__WEBPACK_IMPORTED_MODULE_0__["FETCH_USER_AUTH_BEGIN"]:

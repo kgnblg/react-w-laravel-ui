@@ -23,7 +23,7 @@ const initialUserState = {
 
 export default function userReducer(state = initialUserState, action) {
     if(action.type === undefined || action.type === null) { return }
-
+    console.log(action.type)
     switch(action.type) {
         case FETCH_USER_AUTH_BEGIN:
             return {
