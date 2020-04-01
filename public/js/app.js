@@ -72134,6 +72134,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/store */ "./resources/js/store/store.js");
 /* harmony import */ var _navbar_Header__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./navbar/Header */ "./resources/js/components/navbar/Header.js");
 /* harmony import */ var _login_login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./login/login */ "./resources/js/components/login/login.js");
+/* harmony import */ var _dashboard_dashboard__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./dashboard/dashboard */ "./resources/js/components/dashboard/dashboard.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -72155,6 +72156,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -72184,6 +72186,10 @@ var App = /*#__PURE__*/function (_Component) {
         exact: true,
         path: "/",
         component: _login_login__WEBPACK_IMPORTED_MODULE_6__["default"]
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        exact: true,
+        path: "/dashboard",
+        component: _dashboard_dashboard__WEBPACK_IMPORTED_MODULE_7__["default"]
       })))));
     }
   }]);
@@ -72192,6 +72198,66 @@ var App = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
+
+/***/ }),
+
+/***/ "./resources/js/components/dashboard/dashboard.js":
+/*!********************************************************!*\
+  !*** ./resources/js/components/dashboard/dashboard.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var Dashboard = /*#__PURE__*/function (_React$Component) {
+  _inherits(Dashboard, _React$Component);
+
+  var _super = _createSuper(Dashboard);
+
+  function Dashboard() {
+    _classCallCheck(this, Dashboard);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(Dashboard, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Dashboard");
+    }
+  }]);
+
+  return Dashboard;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Dashboard);
 
 /***/ }),
 
@@ -72206,7 +72272,9 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEB
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_user_userAction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../store/user/userAction */ "./resources/js/store/user/userAction.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -72232,6 +72300,9 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/igm;
+
 var Login = /*#__PURE__*/function (_React$Component) {
   _inherits(Login, _React$Component);
 
@@ -72243,21 +72314,88 @@ var Login = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, Login);
 
     _this = _super.call(this, props);
-    console.log(props);
+    _this.state = {
+      email: null,
+      password: null,
+      error: {
+        email: null,
+        password: null
+      }
+    };
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(Login, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var authenticated = this.props.authenticated;
+    key: "handleChange",
+    value: function handleChange(event) {
+      if (event.target.name === 'email') {
+        this.setState({
+          email: event.target.value
+        });
+      }
 
-      if (authenticated) {// redirect
+      if (event.target.name === 'password') {
+        this.setState({
+          password: event.target.value
+        });
+      }
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      this.validateInputs();
+
+      if (this.state.error.email !== null || this.state.error.password !== null) {
+        return;
+      }
+
+      this.props.dispatch(Object(_store_user_userAction__WEBPACK_IMPORTED_MODULE_3__["authenticateUser"])({
+        email: this.state.email,
+        password: this.state.password
+      }));
+    }
+  }, {
+    key: "validateInputs",
+    value: function validateInputs() {
+      // clear previous error logs
+      this.setState({
+        error: {
+          email: null,
+          password: null
+        }
+      });
+
+      if (this.state.email === null || !emailRegex.test(this.state.email)) {
+        this.setState({
+          error: {
+            email: 'Wrong email adress'
+          }
+        });
+      }
+
+      if (this.state.password === null) {
+        this.setState({
+          error: {
+            password: 'Please fill the password field'
+          }
+        });
       }
     }
   }, {
     key: "render",
     value: function render() {
+      console.log(this.props);
+      var authenticated = this.props.authenticated;
+
+      if (authenticated) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
+          to: "/dashboard"
+        });
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container py-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -72270,6 +72408,8 @@ var Login = /*#__PURE__*/function (_React$Component) {
         className: "card-header"
       }, "Login"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -72280,40 +72420,41 @@ var Login = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "email",
         type: "email",
-        className: "form-control is-invalid",
+        className: "form-control " + (this.state.error.email !== null ? 'is-invalid' : ''),
         name: "email",
-        value: "",
         required: true,
         autoComplete: "email",
-        autoFocus: true
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        autoFocus: true,
+        onChange: this.handleChange
+      }), this.state.error.email !== null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "invalid-feedback",
         role: "alert"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Hata mesaj\u0131")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, this.state.error.email)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        "for": "password",
+        htmlFor: "password",
         className: "col-md-4 col-form-label text-md-right"
       }, "Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-6"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "password",
         type: "password",
-        className: "form-control is-invalid",
+        className: "form-control " + (this.state.error.password !== null ? 'is-invalid' : ''),
         name: "password",
         required: true,
-        autoComplete: "current-password"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        autoComplete: "current-password",
+        onChange: this.handleChange
+      }), this.state.error.password !== null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "invalid-feedback",
         role: "alert"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "hata")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, this.state.error.password)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group row mb-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-8 offset-md-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
         className: "btn btn-primary"
-      }, "Login"))))))));
+      }, "Login")))))))));
     }
   }]);
 
@@ -72323,11 +72464,12 @@ var Login = /*#__PURE__*/function (_React$Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     user: state.user.user,
-    authenticated: state.user.authenticated
+    authenticated: state.user.authenticated,
+    error: state.user.error
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(Login));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps)(Login));
 
 /***/ }),
 
@@ -72541,9 +72683,10 @@ var userAuthBegin = function userAuthBegin() {
     type: FETCH_USER_AUTH_BEGIN
   };
 };
-var userAuthSuccess = function userAuthSuccess() {
+var userAuthSuccess = function userAuthSuccess(payload) {
   return {
-    type: FETCH_USER_AUTH_SUCCESS
+    type: FETCH_USER_AUTH_SUCCESS,
+    payload: payload
   };
 };
 var userAuthFailure = function userAuthFailure() {
@@ -72586,9 +72729,12 @@ var authenticateUser = function authenticateUser(user) {
       email: user.email,
       password: user.password
     }).then(function (res) {
-      dispatch(userAuthSuccess());
-      return res && res.token ? res.token : null;
-    })["catch"](function () {
+      dispatch(userAuthSuccess({
+        user: {
+          token: res && res.data.token ? res.data.token : null
+        }
+      }));
+    })["catch"](function (a) {
       dispatch(userAuthFailure());
     });
   };
@@ -72637,13 +72783,13 @@ function userReducer() {
 
   switch (action.type) {
     case _userAction__WEBPACK_IMPORTED_MODULE_0__["FETCH_USER_AUTH_BEGIN"]:
-      return _objectSpread({}, initialUserState, {
+      return _objectSpread({}, state, {
         loading: true,
         error: false
       });
 
     case _userAction__WEBPACK_IMPORTED_MODULE_0__["FETCH_USER_AUTH_SUCCESS"]:
-      return _objectSpread({}, initialUserState, {
+      return _objectSpread({}, state, {
         loading: false,
         error: false,
         authenticated: true,
@@ -72653,21 +72799,21 @@ function userReducer() {
       });
 
     case _userAction__WEBPACK_IMPORTED_MODULE_0__["FETCH_USER_AUTH_FAILURE"]:
-      return _objectSpread({}, initialUserState, {
+      return _objectSpread({}, state, {
         loading: false,
         error: false,
         authenticated: false
       });
 
     case _userAction__WEBPACK_IMPORTED_MODULE_0__["FETCH_USER_DATA_BEGIN"]:
-      return _objectSpread({}, initialUserState, {
+      return _objectSpread({}, state, {
         loading: true,
         error: false,
         initialized: false
       });
 
     case _userAction__WEBPACK_IMPORTED_MODULE_0__["FETCH_USER_DATA_SUCCESS"]:
-      return _objectSpread({}, initialUserState, {
+      return _objectSpread({}, state, {
         loading: false,
         error: false,
         initialized: true,
@@ -72675,14 +72821,14 @@ function userReducer() {
       });
 
     case _userAction__WEBPACK_IMPORTED_MODULE_0__["FETCH_USER_DATA_FAILURE"]:
-      return _objectSpread({}, initialUserState, {
+      return _objectSpread({}, state, {
         loading: false,
         error: true,
         initialized: false
       });
 
     default:
-      return initialUserState;
+      return state;
   }
 }
 

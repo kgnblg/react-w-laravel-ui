@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { Provider } from "react-redux"
 import { store } from '../store/store'
-import Header from './navbar/Header'
 
-import Login from './login/login'
+import Header    from './navbar/Header'
+import Login     from './login/login'
+import Dashboard from './dashboard/dashboard'
 
 class App extends Component {
     render () {
@@ -15,7 +16,8 @@ class App extends Component {
                     <div>
                         <Header />
                         <Switch>
-                            <Route exact path='/' component={Login} />
+                            <Route exact path='/'          component={Login}     />
+                            <Route exact path='/dashboard' component={Dashboard} />
                         </Switch>
                     </div>
                 </BrowserRouter>

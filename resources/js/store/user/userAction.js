@@ -12,9 +12,9 @@ export const fetchUserDataBegin   = () => ({ type: FETCH_USER_DATA_BEGIN   })
 export const fetchUserDataSuccess = () => ({ type: FETCH_USER_DATA_SUCCESS })
 export const fetchUserDataFailure = () => ({ type: FETCH_USER_DATA_FAILURE })
 
-export const userAuthBegin   = () => ({ type: FETCH_USER_AUTH_BEGIN   })
-export const userAuthSuccess = () => ({ type: FETCH_USER_AUTH_SUCCESS })
-export const userAuthFailure = () => ({ type: FETCH_USER_AUTH_FAILURE })
+export const userAuthBegin   = ()        => ({ type: FETCH_USER_AUTH_BEGIN   })
+export const userAuthSuccess = (payload) => ({ type: FETCH_USER_AUTH_SUCCESS, payload })
+export const userAuthFailure = ()        => ({ type: FETCH_USER_AUTH_FAILURE })
 
 export const fetchUserData = (user = null) => {
     return dispatch => {
@@ -59,10 +59,13 @@ export const authenticateUser = (user) => {
             }
         )
         .then((res) => {
-            dispatch(userAuthSuccess())
-            return (res && res.token ? res.token : null)
+            dispatch(userAuthSuccess({
+                user: {
+                    token: (res && res.data.token ? res.data.token : null)
+                }
+            }))
         })
-        .catch(() => {
+        .catch((a) => {
             dispatch(userAuthFailure())
         })
     }

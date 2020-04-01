@@ -27,14 +27,14 @@ export default function userReducer(state = initialUserState, action) {
     switch(action.type) {
         case FETCH_USER_AUTH_BEGIN:
             return {
-                ...initialUserState,
+                ...state,
                 loading : true,
                 error   : false,
             }
 
         case FETCH_USER_AUTH_SUCCESS:
             return {
-                ...initialUserState,
+                ...state,
                 loading       : false,
                 error         : false,
                 authenticated : true,
@@ -45,7 +45,7 @@ export default function userReducer(state = initialUserState, action) {
 
         case FETCH_USER_AUTH_FAILURE:
             return {
-                ...initialUserState,
+                ...state,
                 loading       : false,
                 error         : false,
                 authenticated : false,
@@ -53,7 +53,7 @@ export default function userReducer(state = initialUserState, action) {
 
         case FETCH_USER_DATA_BEGIN:
             return {
-                ...initialUserState,
+                ...state,
                 loading       : true,
                 error         : false,
                 initialized   : false,
@@ -61,7 +61,7 @@ export default function userReducer(state = initialUserState, action) {
 
         case FETCH_USER_DATA_SUCCESS:
             return {
-                ...initialUserState,
+                ...state,
                 loading       : false,
                 error         : false,
                 initialized   : true,
@@ -70,13 +70,13 @@ export default function userReducer(state = initialUserState, action) {
 
         case FETCH_USER_DATA_FAILURE:
             return {
-                ...initialUserState,
+                ...state,
                 loading       : false,
                 error         : true,
                 initialized   : false,
             }
 
         default:
-            return initialUserState
+            return state
     }
 }
