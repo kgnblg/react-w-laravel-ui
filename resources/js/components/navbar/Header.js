@@ -5,9 +5,12 @@ import { fetchUserData } from '../../store/user/userAction'
 
 class Header extends React.Component {
     getUserData() {
-        const { authenticated, user } = this.props
-        if (authenticated && user.token !== null) {
+        const { authenticated, user, initialized, error } = this.props
+        if (authenticated && ! initialized && user.token !== null) {
             // if there is an error, do not try to refetch
+            // basic error msg to user
+            if (error) { window.alert('An error occured. Please try again.') }
+
             this.props.dispatch(fetchUserData(user))
         }
     }
@@ -77,6 +80,8 @@ class Header extends React.Component {
 const mapStateToProps = state => ({
     user          : state.user.user,
     authenticated : state.user.authenticated,
+    initialized   : state.user.initialized,
+    error         : state.user.error,
 });
 
 export default connect(mapStateToProps)(withRouter(Header));

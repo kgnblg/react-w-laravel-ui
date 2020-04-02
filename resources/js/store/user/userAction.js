@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-export const FETCH_USER_DATA_BEGIN   = 'FETCH_USER_BEGIN'
-export const FETCH_USER_DATA_SUCCESS = 'FETCH_USER_SUCCESS'
-export const FETCH_USER_DATA_FAILURE = 'FETCH_USER_FAILURE'
+export const FETCH_USER_DATA_BEGIN   = 'FETCH_USER_DATA_BEGIN'
+export const FETCH_USER_DATA_SUCCESS = 'FETCH_USER_DATA_SUCCESS'
+export const FETCH_USER_DATA_FAILURE = 'FETCH_USER_DATA_FAILURE'
 // Auth
 export const FETCH_USER_AUTH_BEGIN   = 'FETCH_USER_AUTH_BEGIN'
 export const FETCH_USER_AUTH_SUCCESS = 'FETCH_USER_AUTH_SUCCESS'
@@ -28,15 +28,15 @@ export const fetchUserData = (user = null) => {
         return axios.get(
             'http://localhost:8000/api/user',
             {
-                headers: { Authorization: `Bearer ${user.token}` },
+                headers: { 'Authorization': `Bearer ${user.token}` },
             }
         )
         .then((res) => {
             dispatch(fetchUserDataSuccess({
                 user: {
-                    id       : res.data.id,
-                    name     : res.data.name,
-                    email    : res.data.email,
+                    id       : res.data.user.id,
+                    name     : res.data.user.name,
+                    email    : res.data.user.email,
                     password : null,
                 }
             }))
@@ -71,7 +71,7 @@ export const authenticateUser = (user) => {
                 }
             }))
         })
-        .catch((a) => {
+        .catch(() => {
             dispatch(userAuthFailure())
         })
     }

@@ -72564,10 +72564,17 @@ var Header = /*#__PURE__*/function (_React$Component) {
     value: function getUserData() {
       var _this$props = this.props,
           authenticated = _this$props.authenticated,
-          user = _this$props.user;
+          user = _this$props.user,
+          initialized = _this$props.initialized,
+          error = _this$props.error;
 
-      if (authenticated && user.token !== null) {
+      if (authenticated && !initialized && user.token !== null) {
         // if there is an error, do not try to refetch
+        // basic error msg to user
+        if (error) {
+          window.alert('An error occured. Please try again.');
+        }
+
         this.props.dispatch(Object(_store_user_userAction__WEBPACK_IMPORTED_MODULE_3__["fetchUserData"])(user));
       }
     }
@@ -72634,7 +72641,9 @@ var Header = /*#__PURE__*/function (_React$Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     user: state.user.user,
-    authenticated: state.user.authenticated
+    authenticated: state.user.authenticated,
+    initialized: state.user.initialized,
+    error: state.user.error
   };
 };
 
@@ -72707,9 +72716,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
-var FETCH_USER_DATA_BEGIN = 'FETCH_USER_BEGIN';
-var FETCH_USER_DATA_SUCCESS = 'FETCH_USER_SUCCESS';
-var FETCH_USER_DATA_FAILURE = 'FETCH_USER_FAILURE'; // Auth
+var FETCH_USER_DATA_BEGIN = 'FETCH_USER_DATA_BEGIN';
+var FETCH_USER_DATA_SUCCESS = 'FETCH_USER_DATA_SUCCESS';
+var FETCH_USER_DATA_FAILURE = 'FETCH_USER_DATA_FAILURE'; // Auth
 
 var FETCH_USER_AUTH_BEGIN = 'FETCH_USER_AUTH_BEGIN';
 var FETCH_USER_AUTH_SUCCESS = 'FETCH_USER_AUTH_SUCCESS';
@@ -72759,14 +72768,14 @@ var fetchUserData = function fetchUserData() {
     dispatch(fetchUserDataBegin());
     return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8000/api/user', {
       headers: {
-        Authorization: "Bearer ".concat(user.token)
+        'Authorization': "Bearer ".concat(user.token)
       }
     }).then(function (res) {
       dispatch(fetchUserDataSuccess({
         user: {
-          id: res.data.id,
-          name: res.data.name,
-          email: res.data.email,
+          id: res.data.user.id,
+          name: res.data.user.name,
+          email: res.data.user.email,
           password: null
         }
       }));
@@ -72792,7 +72801,7 @@ var authenticateUser = function authenticateUser(user) {
           token: res && res.data.token ? res.data.token : null
         }
       }));
-    })["catch"](function (a) {
+    })["catch"](function () {
       dispatch(userAuthFailure());
     });
   };
@@ -72838,8 +72847,6 @@ function userReducer() {
   if (action.type === undefined || action.type === null) {
     return;
   }
-
-  console.log(action.type);
 
   switch (action.type) {
     case _userAction__WEBPACK_IMPORTED_MODULE_0__["FETCH_USER_AUTH_BEGIN"]:
