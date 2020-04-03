@@ -24,8 +24,18 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return $products->toJson();
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+            if (! $user) {
+                return response()->json([]);
+            } 
+
+            $products = Product::all();
+            return $products->toJson();
+        }
+        catch(\Throwable $e) {
+            return response()->json([]);
+        }
     }
 
     /**
