@@ -1,25 +1,34 @@
 import React from 'react'
 import { connect } from "react-redux"
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { fetchUserData } from '../../store/user/userAction'
+import LoadingSpinner from '../modules/Spinner/LoadingSpinner'
 
 class Header extends React.Component {
+    componentDidMount()  { this.getUserData() }
+    componentDidUpdate() { this.getUserData() }
+
     getUserData() {
         const { authenticated, user, initialized, error } = this.props
+
         if (authenticated && ! initialized && user.token !== null) {
             // if there is an error, do not try to refetch
             // basic error msg to user
-            if (error) { window.alert('An error occured. Please try again.') }
+            if (error) {
+                window.alert('An error occured. Please try again.')
+                return
+            }
 
             this.props.dispatch(fetchUserData(user))
         }
     }
 
     render() {
-        const { authenticated, user } = this.props
-        this.getUserData()
+        const { authenticated, user, loading } = this.props
+
         return (
             <div className="mb-4">
+                { loading && <LoadingSpinner /> }
                 <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                     <div className="container">
                         <a className="navbar-brand" href="">Larasix <sup>by kgnblg</sup></a>
@@ -39,7 +48,17 @@ class Header extends React.Component {
                                 {
                                     authenticated
                                         && (
-                                            <a href="#">Dashboard</a>
+                                            <div className="d-flex justify-content-center">
+                                                <li>
+                                                    <Link className="nav-link" to="/dashboard">Dashboard</Link>
+                                                </li>
+                                                <li>
+                                                    <Link className="nav-link" to="/products">Products</Link>
+                                                </li>
+                                                <li>
+                                                    <a className="nav-link" href="#">Orders</a>
+                                                </li>
+                                            </div>
                                         )
                                 }
                             </ul>
@@ -62,7 +81,8 @@ class Header extends React.Component {
                                                 className="dropdown-menu dropdown-menu-right"
                                                 aria-labelledby="navbarDropdown"
                                             >
-                                                <a className="dropdown-item" href="">
+                                                <a className="dropdown-item" href="#">
+                                                    Logout
                                                 </a>
                                             </div>
                                         </li>
@@ -82,6 +102,7 @@ const mapStateToProps = state => ({
     authenticated : state.user.authenticated,
     initialized   : state.user.initialized,
     error         : state.user.error,
+    loading       : state.user.loading,
 });
 
 export default connect(mapStateToProps)(withRouter(Header));
