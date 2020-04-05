@@ -38,6 +38,7 @@ export const fetchUserData = (user = null) => {
                     name     : res.data.user.name,
                     email    : res.data.user.email,
                     password : null,
+                    token    : user.token,
                 }
             }))
         })
