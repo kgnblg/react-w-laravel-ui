@@ -4,19 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use JWTAuth;
 
 class ProductController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -24,18 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        try {
-            $user = JWTAuth::parseToken()->authenticate();
-            if (! $user) {
-                return response()->json([]);
-            } 
-
-            $products = Product::all();
-            return $products->toJson();
-        }
-        catch(\Throwable $e) {
-            return response()->json([]);
-        }
+        $user = JWTAuth::user();
+        $product = Product::where('user_id', '=', $user->id)->get();
+        return response()->json($product);
     }
 
     /**
