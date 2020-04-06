@@ -12,6 +12,7 @@ import Dashboard from './dashboard/dashboard'
 
 // Product page
 import ProductList from './products/productList'
+import ProductForm from './products/productForm'
 
 class App extends Component {
     render () {
@@ -24,6 +25,7 @@ class App extends Component {
                             <Route exact path='/'          component={Login}       />
                             <PrivateRoute exact path='/dashboard' component={Dashboard}   />
                             <PrivateRoute exact path='/products'  component={ProductList} />
+                            <PrivateRoute exact path="/product/:formType" component={ProductForm} />>
                         </Switch>
                         <Footer />
                     </div>

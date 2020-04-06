@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchProducts } from '../../store/product/productAction'
 import LoadingSpinner from '../modules/Spinner/LoadingSpinner'
+import { Link } from 'react-router-dom'
 
 const productList = () => {
     const dispatch = useDispatch()
@@ -24,7 +25,15 @@ const productList = () => {
                     <div className="col-md-12 mb-4">
                         <div className="card">
                             <div className="card-header">
-                                Products
+                                <div className="d-flex justify-content-between">
+                                    Products
+                                    <Link
+                                        className="btn btn-sm btn-light"
+                                        to="/product/new"
+                                    >
+                                        <i className="fa fa-plus" /> New Product
+                                    </Link>
+                                </div>
                             </div>
                             <div className="card-body">
                                 <table className="table">
@@ -32,6 +41,7 @@ const productList = () => {
                                         <tr>
                                             <th scope="col">ID</th>
                                             <th scope="col">Product Name</th>
+                                            <th scope="col">Price</th>
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
@@ -57,6 +67,7 @@ const noRows = () => (
         <th scope="row">-</th>
         <td>No entry at the DB</td>
         <td>-</td>
+        <td>-</td>
     </tr>
 )
 
@@ -66,7 +77,15 @@ const renderList = (products) => {
             <tr key={p.id}>
                 <th scope="row">{ p.id }</th>
                 <td>{ p.name }</td>
-                <td>-</td>
+                <td>{ p.price }</td>
+                <td>
+                    <Link
+                        className="btn btn-sm btn-light"
+                        to={'/product/' + p.id}
+                    >
+                        <i className="fa fa-file" />
+                    </Link>
+                </td>
             </tr>
         )
     )
