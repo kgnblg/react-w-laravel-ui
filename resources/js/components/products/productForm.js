@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchProducts } from '../../store/product/productAction'
+import { fetchProducts, createProduct } from '../../store/product/productAction'
 import { Form } from 'react-bootstrap'
 import LoadingSpinner from '../modules/Spinner/LoadingSpinner'
 
@@ -36,6 +36,15 @@ const productForm = ({ match: { params } }) => {
         }
     }, [params.formType])
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(createProduct({
+            name: productName,
+            description: productDescription,
+            price: productPrice,
+        }, token))
+    }
+
     return (
         <div>
             { localLoading && <LoadingSpinner /> }
@@ -47,7 +56,7 @@ const productForm = ({ match: { params } }) => {
                                 Product Form
                             </div>
                             <div className="card-body">
-                                <Form>
+                                <Form onSubmit={handleSubmit}>
                                     <Form.Group controlId="product.Name">
                                         <Form.Label>Product Name</Form.Label>
                                         <Form.Control
@@ -76,7 +85,10 @@ const productForm = ({ match: { params } }) => {
                                             required
                                         />
                                     </Form.Group>
-                                    <button className="btn btn-sm btn-success">
+                                    <button
+                                        className="btn btn-sm btn-success"
+                                        type="submit"
+                                    >
                                         <i className="fa fa-plus-square" /> Save
                                     </button>
                                 </Form>

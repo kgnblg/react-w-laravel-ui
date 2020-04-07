@@ -88314,6 +88314,16 @@ var productForm = function productForm(_ref) {
       }
     }
   }, [params.formType]);
+
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    dispatch(Object(_store_product_productAction__WEBPACK_IMPORTED_MODULE_2__["createProduct"])({
+      name: productName,
+      description: productDescription,
+      price: productPrice
+    }, token));
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, localLoading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modules_Spinner_LoadingSpinner__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container py-4"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -88326,7 +88336,9 @@ var productForm = function productForm(_ref) {
     className: "card-header"
   }, "Product Form"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "card-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["Form"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["Form"].Group, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["Form"], {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["Form"].Group, {
     controlId: "product.Name"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["Form"].Label, null, "Product Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["Form"].Control, {
     type: "input",
@@ -88355,7 +88367,8 @@ var productForm = function productForm(_ref) {
     },
     required: true
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-sm btn-success"
+    className: "btn btn-sm btn-success",
+    type: "submit"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fa fa-plus-square"
   }), " Save"))))))));
@@ -88466,32 +88479,36 @@ var renderList = function renderList(products) {
 /*!*****************************************************!*\
   !*** ./resources/js/store/product/productAction.js ***!
   \*****************************************************/
-/*! exports provided: FETCH_PRODUCTS_BEGIN, FETCH_PRODUCTS_FAILURE, FETCH_PRODUCTS_SUCCESS, fetchProductsBegin, fetchProductsFailure, fetchProductsSuccess, fetchProducts */
+/*! exports provided: PRODUCTS_ACTION_BEGIN, PRODUCTS_ACTION_FAILURE, FETCH_PRODUCTS_SUCCESS, CREATE_PRODUCT_SUCCESS, productsActionBegin, productsActionFailure, fetchProductsSuccess, createProductSuccess, fetchProducts, createProduct */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_PRODUCTS_BEGIN", function() { return FETCH_PRODUCTS_BEGIN; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_PRODUCTS_FAILURE", function() { return FETCH_PRODUCTS_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PRODUCTS_ACTION_BEGIN", function() { return PRODUCTS_ACTION_BEGIN; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PRODUCTS_ACTION_FAILURE", function() { return PRODUCTS_ACTION_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_PRODUCTS_SUCCESS", function() { return FETCH_PRODUCTS_SUCCESS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchProductsBegin", function() { return fetchProductsBegin; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchProductsFailure", function() { return fetchProductsFailure; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_PRODUCT_SUCCESS", function() { return CREATE_PRODUCT_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "productsActionBegin", function() { return productsActionBegin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "productsActionFailure", function() { return productsActionFailure; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchProductsSuccess", function() { return fetchProductsSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createProductSuccess", function() { return createProductSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchProducts", function() { return fetchProducts; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createProduct", function() { return createProduct; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
-var FETCH_PRODUCTS_BEGIN = 'FETCH_PRODUCTS_BEGIN';
-var FETCH_PRODUCTS_FAILURE = 'FETCH_PRODUCTS_FAILURE';
+var PRODUCTS_ACTION_BEGIN = 'PRODUCTS_ACTION_BEGIN';
+var PRODUCTS_ACTION_FAILURE = 'PRODUCTS_ACTION_FAILURE';
 var FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS';
-var fetchProductsBegin = function fetchProductsBegin() {
+var CREATE_PRODUCT_SUCCESS = 'CREATE_PRODUCT_SUCCESS';
+var productsActionBegin = function productsActionBegin() {
   return {
-    type: FETCH_PRODUCTS_BEGIN
+    type: PRODUCTS_ACTION_BEGIN
   };
 };
-var fetchProductsFailure = function fetchProductsFailure() {
+var productsActionFailure = function productsActionFailure() {
   return {
-    type: FETCH_PRODUCTS_FAILURE
+    type: PRODUCTS_ACTION_FAILURE
   };
 };
 var fetchProductsSuccess = function fetchProductsSuccess(payload) {
@@ -88500,24 +88517,55 @@ var fetchProductsSuccess = function fetchProductsSuccess(payload) {
     payload: payload
   };
 };
+var createProductSuccess = function createProductSuccess(payload) {
+  return {
+    type: CREATE_PRODUCT_SUCCESS,
+    payload: payload
+  };
+};
 var fetchProducts = function fetchProducts(token) {
   return function (dispatch) {
     if (!token) {
-      dispatch(fetchProductsFailure);
+      dispatch(productsActionFailure());
       return;
     }
 
-    dispatch(fetchProductsBegin());
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8000/api/products', {
+    dispatch(productsActionBegin());
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://localhost:8000/api/product', {
       headers: {
         'Authorization': "Bearer ".concat(token)
       }
     }).then(function (res) {
       dispatch(fetchProductsSuccess({
-        products: res.data
+        products: res.data.data
       }));
     })["catch"](function () {
-      dispatch(fetchProductsFailure());
+      dispatch(productsActionFailure());
+    });
+  };
+};
+var createProduct = function createProduct(product, token) {
+  return function (dispatch) {
+    if (!token) {
+      dispatch(productsActionFailure());
+      return;
+    }
+
+    dispatch(productsActionBegin());
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('http://localhost:8000/api/product', {
+      name: product.name,
+      description: product.description,
+      price: product.price
+    }, {
+      headers: {
+        'Authorization': "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      dispatch(createProductSuccess({
+        product: res.data
+      }));
+    })["catch"](function () {
+      dispatch(productsActionFailure());
     });
   };
 };
@@ -88557,12 +88605,12 @@ function productReducer() {
   }
 
   switch (action.type) {
-    case _productAction__WEBPACK_IMPORTED_MODULE_0__["FETCH_PRODUCTS_BEGIN"]:
+    case _productAction__WEBPACK_IMPORTED_MODULE_0__["PRODUCTS_ACTION_BEGIN"]:
       return _objectSpread({}, state, {
         loading: true
       });
 
-    case _productAction__WEBPACK_IMPORTED_MODULE_0__["FETCH_PRODUCTS_FAILURE"]:
+    case _productAction__WEBPACK_IMPORTED_MODULE_0__["PRODUCTS_ACTION_FAILURE"]:
       return _objectSpread({}, state, {
         loading: false,
         error: true
@@ -88574,6 +88622,14 @@ function productReducer() {
         error: false,
         initialized: true,
         products: action.payload.products
+      });
+
+    case _productAction__WEBPACK_IMPORTED_MODULE_0__["CREATE_PRODUCT_SUCCESS"]:
+      return _objectSpread({}, state, {
+        loading: false,
+        error: false,
+        initialized: true,
+        products: state.products.push(action.payload.product)
       });
 
     default:

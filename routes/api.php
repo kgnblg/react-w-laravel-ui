@@ -17,10 +17,10 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-Route::post('register', 'UserController@register');
-Route::post('login', 'UserController@authenticate');
+Route::post('register', 'UserController@register')->name('register');
+Route::post('login', 'UserController@authenticate')->name('login');
 
 Route::group(['middleware' => ['jwt.verify']], function () {
-    Route::get('user', 'UserController@getAuthenticatedUser');
-    Route::get('products', 'ProductController@index');
+    Route::get('user', 'UserController@getAuthenticatedUser')->name('authuser');
+    Route::apiResource('product', 'ProductController');
 });
