@@ -44,7 +44,7 @@ export default function productReducer(state = initialState, action) {
                 loading     : false,
                 error       : false,
                 initialized : true,
-                products    : state.products.push(action.payload.product),
+                products    : [ ...state.products, action.payload.product],
             }
 
         default:

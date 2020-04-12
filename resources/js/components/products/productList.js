@@ -6,15 +6,18 @@ import { Link } from 'react-router-dom'
 
 const productList = () => {
     const dispatch = useDispatch()
-    const { product, token, loading } = useSelector(state => ({
+    const { product, token, loading, initialized } = useSelector(state => ({
         product : state.product,
         token   : state.user.user.token,
         loading : state.product.loading,
+        initialized: state.product.initialized,
     }))
 
     // consoleDidMount
     useEffect(() => {
-        dispatch(fetchProducts(token))
+        if (! initialized) {
+            dispatch(fetchProducts(token))
+        }
     }, [])
 
     return (

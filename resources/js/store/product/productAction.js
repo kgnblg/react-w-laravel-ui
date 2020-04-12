@@ -59,7 +59,7 @@ export const createProduct = (product, token) => {
         )
         .then((res) => {
             dispatch(createProductSuccess({
-                product: res.data
+                product: res.data.data
             }))
         })
         .catch(() => {
