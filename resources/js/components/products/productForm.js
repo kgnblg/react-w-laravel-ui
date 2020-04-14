@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchProducts, createProduct } from '../../store/product/productAction'
+import { Redirect } from 'react-router-dom'
+import { fetchProducts, createProduct, updateProduct } from '../../store/product/productAction'
 import { Form } from 'react-bootstrap'
 import LoadingSpinner from '../modules/Spinner/LoadingSpinner'
 
@@ -8,21 +9,22 @@ const productForm = ({ match: { params } }) => {
     const dispatch = useDispatch()
 
     const [productName,   setProductName] = useState('')
-    const [productPrice, setProductPrice] = useState('0.00')
+    const [productPrice, setProductPrice] = useState('')
     const [localLoading, setLocalLoading] = useState(false)
     const [productDescription, setProductDescription] = useState('')
+    const [submitted, setSubmitted] = useState(false)
 
-    const { product, token, loading, initialized } = useSelector(state => ({
+    const { product, token, loading, error, initialized } = useSelector(state => ({
         product     : state.product,
         token       : state.user.user.token,
         loading     : state.product.loading,
+        error       : state.product.error,
         initialized : state.product.initialized,
     }))
 
     useEffect(() => {
         if (params.formType !== 'new') {
             // fetch the product for edit mode
-            setLocalLoading(loading)
             if (! initialized) {
                 dispatch(fetchProducts(token))
             } else {
@@ -36,13 +38,31 @@ const productForm = ({ match: { params } }) => {
         }
     }, [params.formType])
 
+    useEffect(() => {
+        setLocalLoading(loading)
+    }, [ loading ])
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(createProduct({
-            name: productName,
-            description: productDescription,
-            price: productPrice,
-        }, token))
+        if (params.formType === 'new') {
+            dispatch(createProduct({
+                name: productName,
+                description: productDescription,
+                price: productPrice,
+            }, token))
+        } else {
+            dispatch(updateProduct({
+                id: params.formType,
+                name: productName,
+                description: productDescription,
+                price: productPrice,
+            }, token))
+        }
+        setSubmitted(true)
+    }
+
+    if (! loading && ! error && submitted) {
+        return <Redirect to='/products' />
     }
 
     return (

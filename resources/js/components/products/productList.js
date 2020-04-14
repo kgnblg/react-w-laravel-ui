@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchProducts } from '../../store/product/productAction'
+import { fetchProducts, deleteProduct } from '../../store/product/productAction'
 import LoadingSpinner from '../modules/Spinner/LoadingSpinner'
 import { Link } from 'react-router-dom'
 
@@ -52,7 +52,7 @@ const productList = () => {
                                         {
                                             product.products.length === 0
                                                 ? noRows()
-                                                : renderList(product.products)
+                                                : renderList(product.products, dispatch, token)
                                         }
                                     </tbody>
                                 </table>
@@ -74,7 +74,7 @@ const noRows = () => (
     </tr>
 )
 
-const renderList = (products) => {
+const renderList = (products, dispatch, token) => {
     const list = products.map(
         (p) => (
             <tr key={p.id}>
@@ -88,6 +88,12 @@ const renderList = (products) => {
                     >
                         <i className="fa fa-file" />
                     </Link>
+                    <button
+                        className="btn btn-sm btn-danger"
+                        onClick={ () => { dispatch(deleteProduct(p, token)) } }
+                    >
+                        <i className="fa fa-remove" />
+                    </button>
                 </td>
             </tr>
         )

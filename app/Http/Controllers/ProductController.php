@@ -68,22 +68,38 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $user = JWTAuth::user();
+
+        if ($user->id !== $product->user_id) {
+            return response()->json(['error' => 'You can not edit this product.'], 403);
+        }
+
+        $product->update($request->only(['name', 'price', 'description']));
+
+        return new ProductResource($product);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $user = JWTAuth::user();
+
+        if ($user->id !== $product->user_id) {
+            return response()->json(['error' => 'You can not delete this product.'], 403);
+        }
+
+        $product->delete();
+
+        return response()->json(null, 204);
     }
 }
