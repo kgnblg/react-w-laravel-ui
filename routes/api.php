@@ -23,5 +23,5 @@ Route::post('login', 'UserController@authenticate')->name('login');
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('user', 'UserController@getAuthenticatedUser')->name('authuser');
     Route::apiResource('product', 'ProductController');
-    Route::apiResource('order', 'OrderController');
+    Route::apiResource('order', 'OrderController', [ 'except' => ['update'] ]);
 });

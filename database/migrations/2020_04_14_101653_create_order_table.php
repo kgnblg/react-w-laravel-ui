@@ -13,7 +13,7 @@ class CreateOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('order', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('product_id');
             $table->integer('count');
@@ -22,7 +22,7 @@ class CreateOrderTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('order', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             $table->foreign('product_id')->references('products')->on('id');
         });
     }
