@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use JWTAuth;
 use Illuminate\Http\Request;
 use App\Order;
+use App\OrderProduct;
 use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
@@ -17,14 +18,9 @@ class OrderController extends Controller
     public function index()
     {
         $user = JWTAuth::user();
-        $orders = Order::whereIn('product_id',
-            function ($query) use ($user) {
-                $query
-                    ->select('id')
-                    ->from('products')
-                    ->where('user_id', '=', $user->id);
-            }
-        )->get();
+        $orders = Order::where('user_id', $user->id)
+            ->with('order_products')
+            ->get();
 
         return OrderResource::collection($orders);
     }

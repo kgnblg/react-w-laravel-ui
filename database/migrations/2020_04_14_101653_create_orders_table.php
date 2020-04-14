@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderTable extends Migration
+class CreateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,15 +15,16 @@ class CreateOrderTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('product_id');
-            $table->integer('count');
+            $table->unsignedBigInteger('user_id');
+            $table->string('customer_name');
+            $table->string('customer_address');
             $table->decimal('total_price', 10);
             $table->enum('status', ['sent', 'new_order', 'will_be_ready']);
             $table->timestamps();
         });
 
         Schema::table('orders', function (Blueprint $table) {
-            $table->foreign('product_id')->references('products')->on('id');
+            $table->foreign('user_id')->references('users')->on('id');
         });
     }
 
