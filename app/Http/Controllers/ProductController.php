@@ -3,13 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\{ UpdateProductRequest, CreateProductRequest };
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\ProductResource;
 use JWTAuth;
 
+use App\Notifications\OrderNotification;
+use App\Jobs\NotificationJob;
+use Carbon\Carbon;
+
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Product::class, 'product');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +28,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $user = JWTAuth::user();
+        $user = auth()->user();
         $product = Product::where('user_id', '=', $user->id)->get();
         return ProductResource::collection($product);
     }
@@ -25,30 +36,27 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CreateProductRequest  $request
      * @return ProductResource
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-
+        $validated = $request->validated();
         $user = JWTAuth::user();
 
         $product = new Product();
-        $product->name = $request->input('name');
-        $product->description = $request->input('description');
-        $product->price = $request->input('price');
+        $product->name = $validated['name'];
+        $product->description = $validated['description'];
+        $product->price = $validated['price'];
         $product->user_id = $user->id;
 
         $product->save();
+
+        NotificationJob::dispatch($user, new OrderNotification([
+            'greeting' => 'New product notification',
+            'data' => 'This is the new product ' . $product->name,
+            'thanks' => 'Regards'
+        ]))->delay(Carbon::now()->addSeconds(60));
 
         return new ProductResource($product);
     }
@@ -67,19 +75,23 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateProductRequest  $request
      * @param  Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
         $user = JWTAuth::user();
-
-        if ($user->id !== $product->user_id) {
+        if (! $product->user->is($user)) {
             return response()->json(['error' => 'You can not edit this product.'], 403);
         }
 
-        $product->update($request->only(['name', 'price', 'description']));
+        $validated = $request->validated();
+        $product->update([
+            'name' => $validated['name'],
+            'price' => $validated['price'],
+            'description' => $validated['description'],
+        ]);
 
         return new ProductResource($product);
     }
@@ -93,8 +105,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $user = JWTAuth::user();
-
-        if ($user->id !== $product->user_id) {
+        if (! $product->user->is($user)) {
             return response()->json(['error' => 'You can not delete this product.'], 403);
         }
 

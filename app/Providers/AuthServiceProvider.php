@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Product' => 'App\Policies\ProductPolicy',
     ];
 
     /**
@@ -25,6 +26,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::before(function ($user, $ability) {
+            $superRoles = $user->roles->pluck('name');
+            if ($superRoles->contains('Admin')
+                || $superRoles->contains('Moderator')) {
+                return true;
+            }
+        });
     }
 }

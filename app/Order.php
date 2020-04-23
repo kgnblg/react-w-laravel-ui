@@ -14,13 +14,13 @@ class Order extends Model
         'status',
     ];
 
-    public function order_products()
-    {
-        return $this->hasMany(OrderProduct::class);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
     }
 }
