@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ExampleService;
+use Example;
 
 class ExperimentController extends Controller
 {
@@ -14,7 +15,7 @@ class ExperimentController extends Controller
      */
     public function index(ExampleService $example)
     {
-        $example->handle();
+        Example::handle();
     }
 
     /**
