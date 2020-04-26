@@ -11,7 +11,9 @@
 |
 */
 
-Route::view('/{path?}', 'app');
+// Route::view('/{path?}', 'app');
+
+Route::resource('experiment', 'ExperimentController');
 
 // Route::get('/', function () {
 //     return view('welcome');
